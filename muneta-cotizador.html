@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cotizador — Ignacio Muneta Seguros</title>
+<meta name="description" content="Cotizá tu seguro con Ignacio Muneta. Asesor de riesgos patrimoniales, abogado y productor de seguros.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --white: #FFFFFF;
+    --cream: #F5F0E8;
+    --grey1: #F2F2F2;
+    --grey2: #E8E8E8;
+    --ink: #1A1A1A;
+    --red: #7A1515;
+    --red-light: #9B1C1C;
+    --muted: #888;
+    --border: rgba(0,0,0,0.1);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--grey1);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    color: var(--ink);
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--ink);
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--red);
+  }
+
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--white);
+    letter-spacing: 2px;
+    text-decoration: none;
+  }
+  .logo span { color: var(--red); }
+
+  .header-contact {
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.4);
+  }
+  .header-contact a {
+    color: rgba(122,21,21,0.8);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  /* ── MAIN WRAPPER ── */
+  .wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* ── INTRO ── */
+  .intro {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .intro-eyebrow {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--red);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .intro-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+    color: var(--ink);
+  }
+
+  .intro-title em { font-style: italic; color: var(--red); }
+
+  .intro-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 440px;
+    margin: 0 auto;
+    font-weight: 300;
+  }
+
+  /* ── PROGRESS ── */
+  .progress-bar {
+    height: 2px;
+    background: var(--grey2);
+    border-radius: 1px;
+    margin-bottom: 40px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--red);
+    border-radius: 1px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  .progress-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: right;
+    margin-bottom: 8px;
+    font-weight: 400;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--white);
+    border-top: 3px solid var(--red);
+    padding: 40px 40px;
+    margin-bottom: 2px;
+  }
+
+  .step { display: none; }
+  .step.active { display: block; }
+
+  .step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 400;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+
+  .step-subtitle {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 28px;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  /* ── RAMO SELECTOR ── */
+  .ramo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .ramo-btn {
+    border: 1.5px solid var(--grey2);
+    background: var(--white);
+    padding: 16px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    text-align: center;
+  }
+
+  .ramo-btn:hover {
+    border-color: var(--red);
+    background: rgba(122,21,21,0.03);
+  }
+
+  .ramo-btn.selected {
+    border-color: var(--red);
+    background: rgba(122,21,21,0.05);
+  }
+
+  .ramo-btn.selected .ramo-btn-name { color: var(--red); font-weight: 600; }
+
+  .ramo-btn-icon { font-size: 24px; }
+  .ramo-btn-name { font-size: 11px; letter-spacing: 0.5px; color: var(--ink); font-weight: 400; line-height: 1.3; }
+
+  /* ── FORM ELEMENTS ── */
+  .form-group { margin-bottom: 20px; }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 7px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  select,
+  textarea {
+    width: 100%;
+    background: var(--grey1);
+    border: 1px solid transparent;
+    border-bottom: 1.5px solid rgba(0,0,0,0.12);
+    padding: 11px 14px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    border-radius: 0;
+    appearance: none;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--red);
+    background: var(--white);
+  }
+
+  textarea { resize: vertical; min-height: 80px; }
+
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237A1515' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+    cursor: pointer;
+    background-color: var(--grey1);
+  }
+
+  /* ── RADIO / CHECKBOX GROUPS ── */
+  .options-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+  }
+
+  .option-chip {
+    border: 1.5px solid var(--grey2);
+    background: var(--white);
+    padding: 8px 14px;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .option-chip:hover { border-color: var(--red); }
+  .option-chip.selected { border-color: var(--red); background: rgba(122,21,21,0.05); color: var(--red); font-weight: 500; }
+
+  /* ── FILE UPLOAD ── */
+  .file-area {
+    border: 1.5px dashed rgba(0,0,0,0.15);
+    padding: 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--grey1);
+    position: relative;
+  }
+
+  .file-area:hover { border-color: var(--red); background: rgba(122,21,21,0.03); }
+
+  .file-area input[type="file"] {
+    position: absolute; inset: 0; opacity: 0;
+    cursor: pointer; width: 100%; height: 100%; padding: 0; border: none;
+  }
+
+  .file-icon { font-size: 24px; margin-bottom: 6px; display: block; }
+  .file-text { font-size: 13px; color: var(--muted); font-weight: 300; }
+  .file-text strong { color: var(--red); font-weight: 600; }
+  .file-hint { font-size: 10px; color: var(--muted); margin-top: 3px; letter-spacing: 0.5px; }
+  .file-name { font-size: 12px; color: var(--red); margin-top: 8px; min-height: 16px; font-weight: 400; }
+
+  /* ── NAVIGATION BUTTONS ── */
+  .btn-row {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 32px;
+  }
+
+  .btn-back {
+    background: transparent;
+    border: 1.5px solid var(--grey2);
+    color: var(--muted);
+    padding: 12px 24px;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 400;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+  }
+
+  .btn-back:hover { border-color: var(--ink); color: var(--ink); }
+
+  .btn-next {
+    background: var(--ink);
+    color: var(--white);
+    border: none;
+    padding: 13px 32px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-next:hover { background: var(--red); }
+
+  .btn-submit {
+    background: var(--red);
+    color: var(--white);
+    border: none;
+    padding: 14px 36px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-submit:hover { background: var(--red-light); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: var(--grey2);
+    margin: 24px 0;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    font-weight: 600;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(122,21,21,0.15);
+  }
+
+  /* ── RESUMEN ── */
+  .resumen-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .resumen-item {
+    background: var(--grey1);
+    padding: 14px 16px;
+  }
+
+  .resumen-key {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .resumen-val {
+    font-size: 14px;
+    color: var(--ink);
+    font-weight: 400;
+  }
+
+  /* ── SUCCESS ── */
+  .success-screen {
+    display: none;
+    text-align: center;
+    padding: 60px 40px;
+    background: var(--white);
+    border-top: 3px solid var(--red);
+  }
+
+  .success-screen.show { display: block; }
+
+  .success-icon { font-size: 52px; margin-bottom: 20px; }
+
+  .success-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    margin-bottom: 12px;
+    color: var(--ink);
+  }
+
+  .success-text {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 360px;
+    margin: 0 auto 28px;
+    font-weight: 300;
+  }
+
+  .wa-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #25D366;
+    color: white;
+    padding: 14px 28px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.2s;
+  }
+
+  .wa-btn:hover { background: #20B858; }
+
+  /* ── WA FLOAT ── */
+  .wa-float {
+    position: fixed; bottom: 24px; right: 24px; z-index: 200;
+    width: 52px; height: 52px; background: #25D366; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 16px rgba(37,211,102,0.4);
+    text-decoration: none; transition: transform 0.2s;
+  }
+  .wa-float:hover { transform: scale(1.1); }
+  .wa-float svg { width: 26px; height: 26px; fill: white; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 600px) {
+    header { padding: 16px 20px; }
+    .wrapper { padding: 32px 16px 60px; }
+    .card { padding: 28px 20px; }
+    .ramo-grid { grid-template-columns: repeat(2, 1fr); }
+    .form-row { grid-template-columns: 1fr; }
+    .resumen-grid { grid-template-columns: 1fr; }
+    .btn-row { flex-direction: column; }
+    .btn-next, .btn-submit, .btn-back { width: 100%; justify-content: center; }
+    .intro-title { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="#">IMM · Seguros</a>
+  <div class="header-contact">¿Preferís hablar? <a href="https://wa.me/542984630953">WhatsApp →</a></div>
+</header>
+
+<div class="wrapper">
+
+  <div class="intro">
+    <div class="intro-eyebrow">Cotizador online</div>
+    <h1 class="intro-title">Cotizá tu<br><em>seguro.</em></h1>
+    <p class="intro-desc">Completá los datos y me comunico personalmente con las mejores opciones para tu caso. Analizamos qué coberturas te convienen y son realmente necesarias para proteger tu patrimonio. Sin compromiso, sin spam.</p>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-label" id="progress-label">Paso 1 de 3</div>
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+
+  <!-- ══════════════════════════════
+       STEP 1: RAMO + DATOS PERSONALES
+  ══════════════════════════════ -->
+  <div class="card step active" id="step-1">
+
+    <div class="step-title">¿Qué querés asegurar?</div>
+    <p class="step-subtitle">Elegí el tipo de seguro y después te hacemos las preguntas específicas.</p>
+
+    <div class="section-label">Tipo de seguro</div>
+    <div class="ramo-grid" id="ramo-grid">
+      <button class="ramo-btn" data-ramo="auto" onclick="selectRamo(this)">
+        <span class="ramo-btn-icon">🚗</span>
+        <span class="ramo-btn-name">Auto / Moto</span>
+      </button>
+      <button class="ramo-btn" data-ramo="hogar" onclick="selectRamo(this)">
+        <span class="ramo-btn-icon">🏠</span>
+        <span class="ramo-btn-name">Hogar / Consorcio</span>
+      </button>
+      <button class="ramo-btn" data-ramo="vida" onclick="selectRamo(this)">
+        <span class="ramo-btn-icon">❤️</span>
+        <span class="ramo-btn-name">Vida / Ahorro</span>
+      </button>
+      <button class="ramo-btn" data-ramo="empresas" onclick="selectRamo(this)">
+        <span class="ramo-btn-icon">🏢</span>
+        <span class="ramo-btn-name">Pymes / Empresas</span>
+      </button>
+      <button class="ramo-btn" data-ramo="rc" onclick="selectRamo(this)">
+        <span class="ramo-btn-icon">⚖️</span>
+        <span class="ramo-btn-name">RC Profesional</span>
+      </button>
+      <button class="ramo-btn" data-ramo="construccion" onclick="selectRamo(this)">
+        <span class="ramo-btn-icon">🏗️</span>
+        <span class="ramo-btn-name">Construcción</span>
+      </button>
+      <button class="ramo-btn" data-ramo="agro" onclick="selectRamo(this)">
+        <span class="ramo-btn-icon">🌾</span>
+        <span class="ramo-btn-name">Agro / Maquinaria</span>
+      </button>
+      <button class="ramo-btn" data-ramo="embarcaciones" onclick="selectRamo(this)">
+        <span class="ramo-btn-icon">⛵</span>
+        <span class="ramo-btn-name">Embarcaciones</span>
+      </button>
+      <button class="ramo-btn" data-ramo="alquiler" onclick="selectRamo(this)">
+        <span class="ramo-btn-icon">🔑</span>
+        <span class="ramo-btn-name">Alquiler</span>
+      </button>
+      <button class="ramo-btn" data-ramo="accidentes" onclick="selectRamo(this)">
+        <span class="ramo-btn-icon">🩺</span>
+        <span class="ramo-btn-name">Accidentes Personales</span>
+      </button>
+      <button class="ramo-btn" data-ramo="otros" onclick="selectRamo(this)">
+        <span class="ramo-btn-icon">➕</span>
+        <span class="ramo-btn-name">Otro</span>
+      </button>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-label">Tus datos</div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" placeholder="Tu nombre">
+      </div>
+      <div class="form-group">
+        <label for="apellido">Apellido</label>
+        <input type="text" id="apellido" placeholder="Tu apellido">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="dni">DNI *</label>
+      <input type="text" id="dni" placeholder="Ej: 30123456" maxlength="8">
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="tu@email.com">
+      </div>
+      <div class="form-group">
+        <label for="telefono">WhatsApp / Teléfono *</label>
+        <input type="tel" id="telefono" placeholder="+54 9 ...">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="direccion">Dirección *</label>
+      <input type="text" id="direccion" placeholder="Calle, número, ciudad...">
+    </div>
+
+    <p style="font-size:11px; color:var(--muted); margin-top:-10px; margin-bottom:8px;">* Completá al menos email o WhatsApp para que pueda contactarte.</p>
+
+    <div class="btn-row">
+      <button class="btn-next" onclick="goStep(2)">Continuar →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       STEP 2: PREGUNTAS POR RAMO
+  ══════════════════════════════ -->
+  <div class="card step" id="step-2">
+    <div class="step-title" id="step2-title">Datos del seguro</div>
+    <p class="step-subtitle" id="step2-subtitle">Completá los detalles para que pueda prepararte la mejor cotización.</p>
+
+    <!-- AUTO -->
+    <div id="form-auto" class="ramo-form" style="display:none">
+
+      <!-- FLOTA TOGGLE -->
+      <div class="form-group" style="background:#f9f4f4; border:1px solid rgba(122,21,21,0.18); border-radius:8px; padding:12px 14px; margin-bottom:8px;">
+        <label style="display:flex; align-items:center; gap:12px; cursor:pointer; margin:0;">
+          <input type="checkbox" id="auto-es-flota" onchange="toggleFlota(this)" style="width:18px; height:18px; accent-color:#7A1515; cursor:pointer; flex-shrink:0;">
+          <span style="font-weight:500; color:#1A1A1A;">¿Es flota? <span style="font-weight:300; color:#888;">(más de 3 vehículos)</span></span>
+        </label>
+      </div>
+
+      <!-- CAMPOS INDIVIDUALES -->
+      <div id="auto-individual">
+        <div class="section-label">Vehículo</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Marca</label>
+            <input type="text" id="auto-marca" placeholder="Ej: Toyota, Volkswagen...">
+          </div>
+          <div class="form-group">
+            <label>Patente</label>
+            <input type="text" id="auto-patente" placeholder="Ej: AB123CD" style="text-transform:uppercase;">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Año</label>
+            <input type="number" id="auto-anio" placeholder="2020" min="1990" max="2025">
+          </div>
+          <div class="form-group">
+            <label>Uso del vehículo</label>
+            <select id="auto-uso">
+              <option value="" disabled selected>Seleccioná</option>
+              <option>Particular</option>
+              <option>Comercial / trabajo</option>
+              <option>Remis / transporte</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>¿Tiene GNC?</label>
+          <div class="options-group">
+            <span class="option-chip" onclick="toggleChip(this, 'auto-gnc')">Sí, tiene GNC</span>
+            <span class="option-chip" onclick="toggleChip(this, 'auto-gnc')">No</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>¿Tiene modificaciones? (opcional)</label>
+          <input type="text" id="auto-modificaciones" placeholder="Ej: escapes, llantas, suspensión... o ninguna">
+        </div>
+        <div class="form-group">
+          <label>¿Es moto?</label>
+          <div class="options-group">
+            <span class="option-chip" onclick="toggleChip(this, 'auto-es-moto')">Sí, es moto</span>
+            <span class="option-chip" onclick="toggleChip(this, 'auto-es-moto')">No, es auto</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL FLOTA -->
+      <div id="auto-flota" style="display:none;">
+        <div class="section-label">Datos de la flota</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Cantidad de vehículos</label>
+            <input type="number" id="auto-flota-cantidad" placeholder="Ej: 5" min="4">
+          </div>
+          <div class="form-group">
+            <label>Uso principal</label>
+            <select id="auto-flota-uso">
+              <option value="" disabled selected>Seleccioná</option>
+              <option>Transporte de carga</option>
+              <option>Transporte de personas</option>
+              <option>Uso comercial / empresa</option>
+              <option>Agropecuario</option>
+              <option>Mixto</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Detalle de los vehículos <span style="font-weight:300; color:#888;">(marca, modelo, año, patente de cada uno)</span></label>
+          <textarea id="auto-flota-detalle" placeholder="Ej:&#10;Toyota Hilux 2022 – AB123CD&#10;Ford Transit 2020 – EF456GH&#10;..." style="width:100%; min-height:90px; padding:10px; border:1px solid #ddd; border-radius:6px; font-family:inherit; font-size:14px; resize:vertical; margin-top:4px;"></textarea>
+        </div>
+      </div>
+
+      <!-- CAMPOS COMUNES (cobertura y seguro actual) -->
+      <div class="form-group">
+        <label>Tipo de cobertura buscada</label>
+        <div class="options-group">
+          <span class="option-chip" onclick="toggleChip(this)">Terceros completo</span>
+          <span class="option-chip" onclick="toggleChip(this)">Terceros + robo</span>
+          <span class="option-chip" onclick="toggleChip(this)">Todo riesgo</span>
+          <span class="option-chip" onclick="toggleChip(this)">No sé, asesorame</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>¿Tenés seguro actualmente?</label>
+        <div class="options-group">
+          <span class="option-chip" onclick="toggleChip(this, 'auto-tiene-seguro')">Sí</span>
+          <span class="option-chip" onclick="toggleChip(this, 'auto-tiene-seguro')">No</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOGAR -->
+    <div id="form-hogar" class="ramo-form" style="display:none">
+      <div class="section-label">Propiedad</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Tipo de propiedad</label>
+          <select id="hogar-tipo">
+            <option value="" disabled selected>Seleccioná</option>
+            <option>Casa</option>
+            <option>Departamento</option>
+            <option>Consorcio / PH</option>
+            <option>Local comercial</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Superficie (m²)</label>
+          <input type="number" id="hogar-m2" placeholder="Ej: 80">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>¿Qué querés cubrir?</label>
+        <div class="options-group">
+          <span class="option-chip" onclick="toggleChip(this)">Incendio</span>
+          <span class="option-chip" onclick="toggleChip(this)">Robo</span>
+          <span class="option-chip" onclick="toggleChip(this)">Daños por agua</span>
+          <span class="option-chip" onclick="toggleChip(this)">Responsabilidad civil</span>
+          <span class="option-chip" onclick="toggleChip(this)">Todo</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>¿La propiedad es propia o alquilada?</label>
+        <div class="options-group">
+          <span class="option-chip" onclick="toggleChip(this, 'hogar-tenencia')">Propia</span>
+          <span class="option-chip" onclick="toggleChip(this, 'hogar-tenencia')">Alquilada</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDA -->
+    <div id="form-vida" class="ramo-form" style="display:none">
+      <div class="section-label">Información personal</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Edad</label>
+          <input type="number" id="vida-edad" placeholder="Ej: 35" min="18" max="80">
+        </div>
+        <div class="form-group">
+          <label>¿Fumás?</label>
+          <select id="vida-fuma">
+            <option value="" disabled selected>Seleccioná</option>
+            <option>No</option>
+            <option>Sí</option>
+            <option>Ex fumador</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>¿Qué tipo de cobertura buscás?</label>
+        <div class="options-group">
+          <span class="option-chip" onclick="toggleChip(this)">Seguro de vida puro</span>
+          <span class="option-chip" onclick="toggleChip(this)">Vida + ahorro / retiro</span>
+          <span class="option-chip" onclick="toggleChip(this)">Accidentes personales</span>
+          <span class="option-chip" onclick="toggleChip(this)">No sé, asesorame</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>¿Tenés dependientes económicos?</label>
+        <div class="options-group">
+          <span class="option-chip" onclick="toggleChip(this, 'vida-dep')">Sí</span>
+          <span class="option-chip" onclick="toggleChip(this, 'vida-dep')">No</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Comentario adicional (opcional)</label>
+        <textarea id="vida-comentario" placeholder="¿Tenés alguna condición de salud relevante? ¿Alguna consulta específica?"></textarea>
+      </div>
+    </div>
+
+    <!-- EMPRESAS -->
+    <div id="form-empresas" class="ramo-form" style="display:none">
+      <div class="section-label">Tu empresa</div>
+      <div class="form-group">
+        <label>Rubro / Actividad</label>
+        <input type="text" id="emp-rubro" placeholder="Ej: ferretería, consultora, restaurante...">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Cantidad de empleados</label>
+          <select id="emp-empleados">
+            <option value="" disabled selected>Seleccioná</option>
+            <option>1 (solo yo)</option>
+            <option>2–5</option>
+            <option>6–20</option>
+            <option>Más de 20</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>¿Tenés local / oficina?</label>
+          <select id="emp-local">
+            <option value="" disabled selected>Seleccioná</option>
+            <option>Sí, propio</option>
+            <option>Sí, alquilado</option>
+            <option>No, trabajo desde casa</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Superficie del local (m²)</label>
+          <input type="number" id="emp-superficie" placeholder="Ej: 120" min="1">
+        </div>
+        <div class="form-group">
+          <label>Tipo de construcción</label>
+          <select id="emp-construccion">
+            <option value="" disabled selected>Seleccioná</option>
+            <option>Mampostería / ladrillo</option>
+            <option>Steel framing / metálica</option>
+            <option>Mixta</option>
+            <option>No aplica</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>¿Qué querés cubrir?</label>
+        <div class="options-group">
+          <span class="option-chip" onclick="toggleChip(this)">Integral de comercio</span>
+          <span class="option-chip" onclick="toggleChip(this)">Seguro operativo</span>
+          <span class="option-chip" onclick="toggleChip(this)">Transporte de mercaderías</span>
+          <span class="option-chip" onclick="toggleChip(this)">Responsabilidad civil</span>
+          <span class="option-chip" onclick="toggleChip(this)">Accidentes de empleados</span>
+          <span class="option-chip" onclick="toggleChip(this)">No sé, asesorame</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RC PROFESIONAL -->
+    <div id="form-rc" class="ramo-form" style="display:none">
+      <div class="section-label">Tu actividad profesional</div>
+      <div class="form-group">
+        <label>Profesión</label>
+        <select id="rc-profesion">
+          <option value="" disabled selected>Seleccioná tu profesión</option>
+          <option>Médico / Especialista</option>
+          <option>Odontólogo</option>
+          <option>Abogado</option>
+          <option>Contador</option>
+          <option>Arquitecto / Ingeniero</option>
+          <option>Psicólogo / Terapeuta</option>
+          <option>Director / Gerente (D&O)</option>
+          <option>Escribano</option>
+          <option>Asesor financiero</option>
+          <option>Otra profesión</option>
+        </select>
+      </div>
+      <div class="form-group" id="rc-otra-prof-group" style="display:none">
+        <label>Especificá tu profesión</label>
+        <input type="text" id="rc-otra-prof" placeholder="Tu profesión">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Años de ejercicio</label>
+          <select id="rc-anios">
+            <option value="" disabled selected>Seleccioná</option>
+            <option>Menos de 2 años</option>
+            <option>2–5 años</option>
+            <option>5–10 años</option>
+            <option>Más de 10 años</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>¿Trabajás en relación de dependencia?</label>
+          <select id="rc-dependencia">
+            <option value="" disabled selected>Seleccioná</option>
+            <option>Solo independiente</option>
+            <option>Solo en relación de dependencia</option>
+            <option>Ambos</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>¿Tenés cobertura actualmente?</label>
+        <div class="options-group">
+          <span class="option-chip" onclick="toggleChip(this, 'rc-tiene')">Sí</span>
+          <span class="option-chip" onclick="toggleChip(this, 'rc-tiene')">No</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONSTRUCCIÓN -->
+    <div id="form-construccion" class="ramo-form" style="display:none">
+      <div class="section-label">Obra / Proyecto</div>
+      <div class="form-group">
+        <label>Tipo de obra</label>
+        <select id="const-tipo">
+          <option value="" disabled selected>Seleccioná</option>
+          <option>Vivienda residencial</option>
+          <option>Edificio / PH</option>
+          <option>Local / oficina comercial</option>
+          <option>Planta industrial</option>
+          <option>Energía renovable (solar, eólica)</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Monto estimado de obra ($)</label>
+          <input type="text" id="const-monto" placeholder="Ej: $50.000.000">
+        </div>
+        <div class="form-group">
+          <label>Duración estimada</label>
+          <select id="const-duracion">
+            <option value="" disabled selected>Seleccioná</option>
+            <option>Menos de 6 meses</option>
+            <option>6–12 meses</option>
+            <option>1–2 años</option>
+            <option>Más de 2 años</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>¿Qué querés cubrir?</label>
+        <div class="options-group">
+          <span class="option-chip" onclick="toggleChip(this)">Todo riesgo construcción</span>
+          <span class="option-chip" onclick="toggleChip(this)">Responsabilidad civil</span>
+          <span class="option-chip" onclick="toggleChip(this)">Equipos y maquinaria</span>
+          <span class="option-chip" onclick="toggleChip(this)">Energías renovables</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- AGRO -->
+    <div id="form-agro" class="ramo-form" style="display:none">
+      <div class="section-label">Campo y maquinaria</div>
+      <div class="form-group">
+        <label>Provincia donde está el campo</label>
+        <input type="text" id="agro-provincia" placeholder="Ej: Buenos Aires, Córdoba, Santa Fe...">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Hectáreas aproximadas</label>
+          <input type="number" id="agro-ha" placeholder="Ej: 500">
+        </div>
+        <div class="form-group">
+          <label>Cultivo principal</label>
+          <input type="text" id="agro-cultivo" placeholder="Ej: soja, trigo, maíz...">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>¿Qué querés asegurar?</label>
+        <div class="options-group">
+          <span class="option-chip" onclick="toggleChip(this)">Granizo</span>
+          <span class="option-chip" onclick="toggleChip(this)">Multi-riesgo agrícola</span>
+          <span class="option-chip" onclick="toggleChip(this)">Maquinaria agrícola</span>
+          <span class="option-chip" onclick="toggleChip(this)">Hacienda / ganadería</span>
+          <span class="option-chip" onclick="toggleChip(this)">Silos / galpones</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- EMBARCACIONES -->
+    <div id="form-embarcaciones" class="ramo-form" style="display:none">
+      <div class="section-label">Tu embarcación</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Tipo de embarcación</label>
+          <select id="emb-tipo">
+            <option value="" disabled selected>Seleccioná</option>
+            <option>Lancha / bote</option>
+            <option>Velero</option>
+            <option>Yate / catamarán</option>
+            <option>Moto de agua</option>
+            <option>Embarcación comercial</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Eslora (metros)</label>
+          <input type="number" id="emb-eslora" placeholder="Ej: 8">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Uso</label>
+        <div class="options-group">
+          <span class="option-chip" onclick="toggleChip(this, 'emb-uso')">Recreativo</span>
+          <span class="option-chip" onclick="toggleChip(this, 'emb-uso')">Pesca deportiva</span>
+          <span class="option-chip" onclick="toggleChip(this, 'emb-uso')">Comercial / alquiler</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>¿Qué querés cubrir?</label>
+        <div class="options-group">
+          <span class="option-chip" onclick="toggleChip(this)">Casco y maquinaria</span>
+          <span class="option-chip" onclick="toggleChip(this)">Responsabilidad civil náutica</span>
+          <span class="option-chip" onclick="toggleChip(this)">Equipo de pesca</span>
+          <span class="option-chip" onclick="toggleChip(this)">Todo</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ALQUILER -->
+    <div id="form-alquiler" class="ramo-form" style="display:none">
+      <div class="section-label">Alquiler</div>
+      <div class="form-group">
+        <label>¿Sos propietario o inquilino?</label>
+        <div class="options-group">
+          <span class="option-chip" onclick="toggleChip(this, 'alq-rol')">Propietario</span>
+          <span class="option-chip" onclick="toggleChip(this, 'alq-rol')">Inquilino</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Tipo de propiedad</label>
+        <select id="alq-tipo">
+          <option value="" disabled selected>Seleccioná</option>
+          <option>Departamento</option>
+          <option>Casa</option>
+          <option>Local comercial</option>
+          <option>Oficina</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>¿Qué necesitás?</label>
+        <div class="options-group">
+          <span class="option-chip" onclick="toggleChip(this)">Garantía de alquiler</span>
+          <span class="option-chip" onclick="toggleChip(this)">Seguro de caución</span>
+          <span class="option-chip" onclick="toggleChip(this)">Seguro del inmueble</span>
+          <span class="option-chip" onclick="toggleChip(this)">No sé, asesorame</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACCIDENTES -->
+    <div id="form-accidentes" class="ramo-form" style="display:none">
+      <div class="section-label">Datos personales</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Edad</label>
+          <input type="number" id="acc-edad" placeholder="Ej: 30" min="18" max="75">
+        </div>
+        <div class="form-group">
+          <label>Actividad / ocupación</label>
+          <input type="text" id="acc-actividad" placeholder="Ej: empleado, deportista, comerciante...">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>¿Qué cobertura buscás?</label>
+        <div class="options-group">
+          <span class="option-chip" onclick="toggleChip(this)">Muerte accidental</span>
+          <span class="option-chip" onclick="toggleChip(this)">Incapacidad total/parcial</span>
+          <span class="option-chip" onclick="toggleChip(this)">Gastos médicos</span>
+          <span class="option-chip" onclick="toggleChip(this)">Renta diaria por internación</span>
+          <span class="option-chip" onclick="toggleChip(this)">Todo incluido</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- OTROS -->
+    <div id="form-otros" class="ramo-form" style="display:none">
+      <div class="section-label">Contame tu necesidad</div>
+      <div class="form-group">
+        <label>¿Qué querés asegurar?</label>
+        <textarea id="otros-detalle" placeholder="Describí con el mayor detalle posible qué necesitás asegurar y para qué uso. A partir de eso analizamos qué coberturas te convienen y son realmente necesarias para proteger tu patrimonio." style="min-height:120px;"></textarea>
+      </div>
+      <div class="form-group">
+        <label>¿Tenés algún seguro actualmente?</label>
+        <div class="options-group">
+          <span class="option-chip" onclick="toggleChip(this, 'otros-tiene')">Sí</span>
+          <span class="option-chip" onclick="toggleChip(this, 'otros-tiene')">No</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-back" onclick="goStep(1)">← Atrás</button>
+      <button class="btn-next" onclick="goStep(3)">Continuar →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       STEP 3: PÓLIZA + RESUMEN + ENVÍO
+  ══════════════════════════════ -->
+  <div class="card step" id="step-3">
+    <div class="step-title">Revisá y enviá</div>
+    <p class="step-subtitle">Revisá tus datos. Podés adjuntar tu póliza actual si querés que la analice.</p>
+
+    <div class="section-label">Resumen</div>
+    <div class="resumen-grid" id="resumen-grid">
+      <!-- filled by JS -->
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-label">Póliza actual (opcional)</div>
+    <div class="form-group">
+      <div class="file-area" onclick="document.getElementById('poliza-file').click()">
+        <input type="file" id="poliza-file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" onchange="showFile(this)">
+        <span class="file-icon">📄</span>
+        <div class="file-text"><strong>Subí tu póliza actual</strong></div>
+        <div class="file-hint">PDF, JPG, PNG, DOC — máx. 5MB</div>
+        <div class="file-name" id="file-name-display"></div>
+      </div>
+      <p style="font-size:11px; color:var(--muted); margin-top:10px; line-height:1.6;">
+        Si preferís, también podés enviarla después por
+        <a href="https://wa.me/542984630953" target="_blank" style="color:var(--red); text-decoration:none; font-weight:500;">WhatsApp</a>
+        o al mail que te voy a enviar al confirmar la consulta. No es obligatorio.
+      </p>
+    </div>
+
+    <div class="form-group">
+      <label>¿Algo más que quieras contarme?</label>
+      <textarea id="mensaje-final" placeholder="Cualquier detalle adicional que pueda ayudar a preparar tu cotización..."></textarea>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-back" onclick="goStep(2)">← Atrás</button>
+      <button class="btn-submit" onclick="submitForm()">Enviar solicitud →</button>
+    </div>
+
+    <p style="font-size:11px; color:var(--muted); text-align:center; margin-top:16px; line-height:1.5;">
+      📩 Respondo personalmente en menos de 24hs hábiles.<br>Tu información es confidencial.
+    </p>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="success-screen" id="success-screen">
+    <div class="success-icon">✅</div>
+    <div class="success-title">¡Recibido!</div>
+    <p class="success-text">Gracias por tu consulta. Me voy a comunicar con vos personalmente en las próximas 24hs hábiles con las opciones para tu caso.</p>
+    <a id="wa-success-btn" href="https://wa.me/542984630953" target="_blank" class="wa-btn">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Escribir por WhatsApp
+    </a>
+  </div>
+
+</div>
+
+<!-- WA Float -->
+<a class="wa-float" href="https://wa.me/542984630953" target="_blank">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+  let currentStep = 1;
+  let selectedRamo = '';
+  let formData = {};
+
+  const ramoLabels = {
+    auto: '🚗 Auto / Moto', hogar: '🏠 Hogar / Consorcio',
+    vida: '❤️ Vida / Ahorro', empresas: '🏢 Pymes / Empresas',
+    rc: '⚖️ RC Profesional', construccion: '🏗️ Construcción',
+    agro: '🌾 Agro / Maquinaria', embarcaciones: '⛵ Embarcaciones',
+    alquiler: '🔑 Alquiler', accidentes: '🩺 Accidentes Personales',
+    otros: '➕ Otro'
+  };
+
+  function selectRamo(btn) {
+    document.querySelectorAll('.ramo-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedRamo = btn.dataset.ramo;
+  }
+
+  function toggleChip(el, group) {
+    if (group) {
+      document.querySelectorAll(`[onclick="toggleChip(this, '${group}')"]`).forEach(c => c.classList.remove('selected'));
+    }
+    el.classList.toggle('selected');
+  }
+
+  function showFile(input) {
+    const d = document.getElementById('file-name-display');
+    d.textContent = input.files[0] ? '📎 ' + input.files[0].name : '';
+  }
+
+  function updateProgress() {
+    const pct = [0, 33, 66, 100];
+    document.getElementById('progress-fill').style.width = pct[currentStep] + '%';
+    document.getElementById('progress-label').textContent = `Paso ${currentStep} de 3`;
+  }
+
+  function goStep(n) {
+    // Validate step 1
+    if (n === 2) {
+      if (!selectedRamo) { alert('Por favor seleccioná un tipo de seguro.'); return; }
+      const email = document.getElementById('email').value.trim();
+      const telefono = document.getElementById('telefono').value.trim();
+      const dni = document.getElementById('dni').value.trim();
+      const direccion = document.getElementById('direccion').value.trim();
+      if (!dni) { alert('El número de DNI es obligatorio.'); return; }
+      if (!direccion) { alert('La dirección es obligatoria.'); return; }
+      if (!email && !telefono) { alert('Por favor ingresá al menos un email o WhatsApp para poder contactarte.'); return; }
+
+      formData.ramo = ramoLabels[selectedRamo];
+      formData.nombre = nombre;
+      formData.apellido = document.getElementById('apellido').value.trim();
+      formData.dni = document.getElementById('dni').value.trim();
+      formData.direccion = document.getElementById('direccion').value.trim();
+      formData.email = email;
+      formData.telefono = document.getElementById('telefono').value.trim();
+
+      // Show ramo-specific form
+      document.querySelectorAll('.ramo-form').forEach(f => f.style.display = 'none');
+      const target = document.getElementById('form-' + selectedRamo);
+      if (target) target.style.display = 'block';
+
+      document.getElementById('step2-title').textContent = ramoLabels[selectedRamo];
+      document.getElementById('step2-subtitle').textContent = 'Completá los detalles para prepararte la mejor cotización.';
+
+      // RC: show/hide other profession
+      if (selectedRamo === 'rc') {
+        document.getElementById('rc-profesion').addEventListener('change', function() {
+          document.getElementById('rc-otra-prof-group').style.display = this.value === 'Otra profesión' ? 'block' : 'none';
+        });
+      }
+    }
+
+    // Build resumen for step 3
+    if (n === 3) {
+      buildResumen();
+    }
+
+    document.getElementById('step-' + currentStep).classList.remove('active');
+    currentStep = n;
+    document.getElementById('step-' + currentStep).classList.add('active');
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function buildResumen() {
+    const grid = document.getElementById('resumen-grid');
+    const items = [
+      { k: 'Tipo de seguro', v: formData.ramo },
+      { k: 'Nombre', v: (formData.nombre + ' ' + formData.apellido).trim() },
+      { k: 'DNI', v: formData.dni },
+      { k: 'Dirección', v: formData.direccion },
+      { k: 'Email', v: formData.email },
+      { k: 'Teléfono', v: formData.telefono || '—' },
+    ];
+    grid.innerHTML = items.map(i => `
+      <div class="resumen-item">
+        <div class="resumen-key">${i.k}</div>
+        <div class="resumen-val">${i.v || '—'}</div>
+      </div>
+    `).join('');
+  }
+
+  function collectRamoData() {
+    const r = selectedRamo;
+    let extra = '';
+    const v = id => { const el = document.getElementById(id); return el ? el.value : ''; };
+    const chips = selector => Array.from(document.querySelectorAll(selector + '.selected')).map(c => c.textContent).join(', ');
+
+    if (r === 'auto') {
+      const esFlota = document.getElementById('auto-es-flota').checked;
+      if (esFlota) {
+        extra = `🚛 FLOTA | Cantidad: ${v('auto-flota-cantidad')} vehículos | Uso: ${v('auto-flota-uso')} | Cobertura: ${chips('#form-auto .option-chip')} | Seguro actual: ${chips('[onclick*="auto-tiene-seguro"]')} | Detalle: ${v('auto-flota-detalle')}`;
+      } else {
+        extra = `Marca: ${v('auto-marca')} | Patente: ${v('auto-patente')} | Año: ${v('auto-anio')} | Uso: ${v('auto-uso')} | GNC: ${chips('[onclick*="auto-gnc"]')} | Modificaciones: ${v('auto-modificaciones') || 'Ninguna'} | Cobertura: ${chips('#form-auto .option-chip')} | Seguro actual: ${chips('[onclick*="auto-tiene-seguro"]')}`;
+      }
+    }
+    if (r === 'hogar') extra = `Tipo: ${v('hogar-tipo')} | m²: ${v('hogar-m2')} | Tenencia: ${chips('[onclick*="hogar-tenencia"]')} | Coberturas: ${chips('#form-hogar .option-chip')}`;
+    if (r === 'vida') extra = `Edad: ${v('vida-edad')} | Fuma: ${v('vida-fuma')} | Tipo: ${chips('#form-vida .option-chip')}`;
+    if (r === 'empresas') extra = `Rubro: ${v('emp-rubro')} | Empleados: ${v('emp-empleados')} | Local: ${v('emp-local')} | Superficie: ${v('emp-superficie') ? v('emp-superficie') + ' m²' : 'No indicada'} | Construcción: ${v('emp-construccion')} | Coberturas: ${chips('#form-empresas .option-chip')}`;
+    if (r === 'rc') extra = `Profesión: ${v('rc-profesion')} | Años: ${v('rc-anios')} | Dependencia: ${v('rc-dependencia')}`;
+    if (r === 'construccion') extra = `Tipo obra: ${v('const-tipo')} | Monto: ${v('const-monto')} | Duración: ${v('const-duracion')}`;
+    if (r === 'agro') extra = `Provincia: ${v('agro-provincia')} | Ha: ${v('agro-ha')} | Cultivo: ${v('agro-cultivo')} | Coberturas: ${chips('#form-agro .option-chip')}`;
+    if (r === 'embarcaciones') extra = `Tipo: ${v('emb-tipo')} | Eslora: ${v('emb-eslora')}m`;
+    if (r === 'alquiler') extra = `Tipo propiedad: ${v('alq-tipo')} | Necesidad: ${chips('#form-alquiler .option-chip')}`;
+    if (r === 'accidentes') extra = `Edad: ${v('acc-edad')} | Actividad: ${v('acc-actividad')} | Cobertura: ${chips('#form-accidentes .option-chip')}`;
+    if (r === 'otros') extra = v('otros-detalle');
+    return extra;
+  }
+
+
+  function toggleFlota(cb) {
+    const esFlota = cb.checked;
+    document.getElementById('auto-individual').style.display = esFlota ? 'none' : 'block';
+    document.getElementById('auto-flota').style.display = esFlota ? 'block' : 'none';
+  }
+
+  function submitForm() {
+    const ramoData = collectRamoData();
+    const mensajeFinal = document.getElementById('mensaje-final').value;
+
+    // Build mailto as fallback + FormSubmit
+    const body = `
+NUEVA COTIZACIÓN — IGNACIO MUNETA SEGUROS
+
+Ramo: ${formData.ramo}
+Nombre: ${formData.nombre} ${formData.apellido}
+Email: ${formData.email}
+Teléfono: ${formData.telefono || 'No ingresado'}
+
+Datos del seguro:
+${ramoData}
+
+Mensaje adicional:
+${mensajeFinal || 'Sin mensaje adicional'}
+
+---
+Enviado desde el cotizador online.
+    `.trim();
+
+    // Send via FormSubmit (replace email below)
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'https://formsubmit.co/abogadomuneta@gmail.com';
+
+    const fields = {
+      '_subject': 'Nueva cotización — ' + formData.ramo,
+      '_captcha': 'false',
+      '_template': 'table',
+      '_replyto': formData.email || '',
+      'Nombre': formData.nombre + ' ' + formData.apellido,
+      'DNI': formData.dni,
+      'Dirección': formData.direccion,
+      'Email': formData.email,
+      'Teléfono': formData.telefono || '—',
+      'Tipo de seguro': formData.ramo,
+      'Datos del seguro': ramoData,
+      'Mensaje': mensajeFinal || '—',
+    };
+
+    Object.entries(fields).forEach(([k, v]) => {
+      const input = document.createElement('input');
+      input.type = 'hidden'; input.name = k; input.value = v;
+      form.appendChild(input);
+    });
+
+    document.body.appendChild(form);
+
+    // Build WhatsApp message
+    const waMsg = encodeURIComponent(
+      `Hola Ignacio, acabo de completar el cotizador online.\n\n` +
+      `📋 *Resumen:*\n` +
+      `• Seguro: ${formData.ramo}\n` +
+      `• Nombre: ${(formData.nombre + ' ' + formData.apellido).trim() || 'No ingresado'}\n` +
+      `• DNI: ${formData.dni}\n` +
+      `• Contacto: ${formData.email || formData.telefono}\n\n` +
+      `Quedo a disposición para coordinar. ¡Gracias!`
+    );
+
+    // Show success UI immediately
+    document.getElementById('step-3').classList.remove('active');
+    const successEl = document.getElementById('success-screen');
+    successEl.classList.add('show');
+
+    // Update WA button with pre-filled message
+    const waBtn = document.getElementById('wa-success-btn');
+    waBtn.href = `https://wa.me/542984630953?text=${waMsg}`;
+
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Submit form in background
+    setTimeout(() => { form.submit(); }, 300);
+  }
+
+  updateProgress();
+</script>
+
+</body>
+</html>
