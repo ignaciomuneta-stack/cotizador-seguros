@@ -1316,33 +1316,25 @@ ${mensajeFinal || 'Sin mensaje adicional'}
 Enviado desde el cotizador online.
     `.trim();
 
-    // Send via FormSubmit (replace email below)
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = 'https://formsubmit.co/abogadomuneta@gmail.com';
-
-    const fields = {
-      '_subject': 'Nueva cotización — ' + formData.ramo,
-      '_captcha': 'false',
-      '_template': 'table',
-      '_replyto': formData.email || '',
-      'Nombre': formData.nombre + ' ' + formData.apellido,
-      'DNI': formData.dni,
-      'Dirección': formData.direccion,
-      'Email': formData.email,
-      'Teléfono': formData.telefono || '—',
-      'Tipo de seguro': formData.ramo,
-      'Datos del seguro': ramoData,
-      'Mensaje': mensajeFinal || '—',
-    };
-
-    Object.entries(fields).forEach(([k, v]) => {
-      const input = document.createElement('input');
-      input.type = 'hidden'; input.name = k; input.value = v;
-      form.appendChild(input);
-    });
-
-    document.body.appendChild(form);
+    // Send via Web3Forms
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        access_key: 'c30c7212-6aac-492e-b4e4-5c723e3ab148',
+        subject: 'Nueva cotización — ' + formData.ramo,
+        from_name: 'Cotizador Muneta Seguros',
+        replyto: formData.email || '',
+        'Nombre': formData.nombre + ' ' + formData.apellido,
+        'DNI': formData.dni,
+        'Dirección': formData.direccion,
+        'Email': formData.email,
+        'Teléfono': formData.telefono || '—',
+        'Tipo de seguro': formData.ramo,
+        'Datos del seguro': ramoData,
+        'Mensaje': mensajeFinal || '—',
+      })
+    }).catch(err => console.error('Web3Forms error:', err));
 
     // Build WhatsApp message
     const waMsg = encodeURIComponent(
